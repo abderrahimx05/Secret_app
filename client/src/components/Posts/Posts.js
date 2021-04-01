@@ -6,6 +6,9 @@ import useStyles from "./styles";
 function Posts() {
   const posts = useSelector((state) => state.posts);
   const classes = useStyles();
+  console.log("====================================");
+  console.log(posts);
+  console.log("====================================");
   return (
     <>
       <h1>Posts</h1>
