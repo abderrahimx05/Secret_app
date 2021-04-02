@@ -1,4 +1,3 @@
-import { Select } from "@material-ui/core";
 import mongoose from "mongoose";
 const postSchema = mongoose.Schema({
   title: String,
@@ -10,7 +9,10 @@ const postSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  createdAt: new Date(),
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
-const PostMessage = mongoose.model("PostMessage", postSchema);
+let PostMessage = mongoose.model("PostMessage", postSchema);
 export default PostMessage;
