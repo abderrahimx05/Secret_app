@@ -35,9 +35,9 @@ function Auth() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignUp) {
-      dispatch(sigup(formData, history));
+      dispatch(signup(formData, history));
     } else {
-      dispatch(sigip(formData, history));
+      dispatch(signin(formData, history));
     }
   };
   const handleChange = (e) => {
@@ -45,7 +45,7 @@ function Auth() {
   };
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
