@@ -12,22 +12,50 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./style";
 import Icon from "./Icon";
 import Input from "./Input";
-
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { signin, signup } from "../../actions/auth";
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 function Auth() {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [formData, setFormData] = useState(initialState);
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  //!here to sigh in or sign up using simple auth
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp) {
+      dispatch(sigup(formData, history));
+    } else {
+      dispatch(sigip(formData, history));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const switchMode = () => {
     setIsSignUp((prevIsSignUp) => !prevIsSignUp);
     handleShowPassword(false);
   };
   const googleSuccess = async (res) => {
-    console.log(res);
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+    try {
+      dispatch({ type: "AUTH", data: { result, token } });
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   const goolgeFailure = () => {
     console.log("Google Sign In was unsuccessful . Try again Later");
@@ -91,7 +119,9 @@ function Auth() {
           >
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
+
           <GoogleLogin
+            //!here auth with google
             clientId="833943561905-enj8ufl8hq2rbep1kg19pt7m04j115gi.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
