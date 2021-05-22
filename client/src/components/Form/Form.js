@@ -23,17 +23,6 @@ function Form({ currentId, setCurrentId }) {
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (currentId === 0) {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
-    } else {
-      dispatch(
-        updatePost(currentId, { ...postData, name: user?.result?.name })
-      );
-      clear();
-    }
-  };
   const clear = () => {
     setCurrentId(null);
     setPostData({
@@ -43,6 +32,19 @@ function Form({ currentId, setCurrentId }) {
       selectedFile: "",
     });
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentId === 0) {
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
+      clear();
+    } else {
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      clear();
+    }
+  };
+
   if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>
@@ -63,16 +65,7 @@ function Form({ currentId, setCurrentId }) {
         <Typography variant="h6">
           {currentId ? "Editing " : "Creating"} My Secret
         </Typography>
-        {/* <TextField
-          fullWidth
-          name="name"
-          variant="outlined"
-          label="Creator"
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        /> */}
+
         <TextField
           fullWidth
           name="title"

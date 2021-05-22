@@ -7,14 +7,13 @@ import { Toolbar } from "@material-ui/core";
 import { Avatar } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 function Navbar() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log("====================================");
-  console.log(user);
-  console.log("====================================");
+
   const dispatch = useDispatch();
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -23,27 +22,24 @@ function Navbar() {
   };
   useEffect(() => {
     const token = user?.token;
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit">
+    <AppBar className={classes.appBar} position="static">
       <div className={classes.brandContainer}>
         <Typography
           component={Link}
           to="/"
           className={classes.heading}
-          variant="h2"
           align="center"
         >
-          Secrets
+          SECRETS
         </Typography>
-        <img
-          className={classes.image}
-          src={secrets}
-          alt="memories"
-          height="60"
-        />
       </div>
       <Toolbar className={classes.toolbar}>
         {user ? (
@@ -55,7 +51,7 @@ function Navbar() {
             >
               {user.name}
             </Avatar>
-            <Typography className={classes.userName} variant="h6">
+            <Typography className={classes.userName} variant="h6" color="black">
               {user.result.name}
             </Typography>
             <Button
@@ -72,7 +68,7 @@ function Navbar() {
             component={Link}
             to="/auth"
             variant="contained"
-            color="primary"
+            color="secondary"
           >
             Sign up
           </Button>

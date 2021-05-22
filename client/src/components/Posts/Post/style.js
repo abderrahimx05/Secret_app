@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles({
   media: {
     height: 0,
-    paddingTop: "56.25%",
+    paddingTop: "86.25%",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     backgroundBlendMode: "darken",
   },
@@ -17,9 +17,15 @@ export default makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    borderRadius: "15px",
+    borderRadius: "25px",
     height: "100%",
     position: "relative",
+    transition: "transform 150ms",
+    backgroundColor: "white",
+    "&:hover": {
+      transform: "scale(1.02)",
+      opacity: 0.9,
+    },
   },
   overlay: {
     position: "absolute",
@@ -39,13 +45,13 @@ export default makeStyles({
   details: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "20px",
+    margin: "10px",
   },
   title: {
-    padding: "0 10px",
+    padding: "0 15px",
   },
   cardActions: {
-    padding: "0 16px 8px 16px",
+    padding: "0 10px 8px 10px",
     display: "flex",
     justifyContent: "space-between",
   },
