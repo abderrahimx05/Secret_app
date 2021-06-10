@@ -1,7 +1,8 @@
 import React from "react";
 import { Pagination, PaginationItem } from "@material-ui/lab";
+import { Link } from "react-router-dom";
 import useStyles from "./styles";
-function Pagination() {
+function Paginate() {
   const classes = useStyles();
   return (
     <div>
@@ -17,4 +18,4 @@ function Pagination() {
   );
 }
 
-export default Pagination;
+export default Paginate;
