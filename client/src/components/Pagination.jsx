@@ -1,8 +1,20 @@
 import React from "react";
 import { Pagination, PaginationItem } from "@material-ui/lab";
-import styles from "./styles";
+import useStyles from "./styles";
 function Pagination() {
-  return <div></div>;
+  const classes = useStyles();
+  return (
+    <div>
+      <Pagination
+        classes={{ ul: classes.ul }}
+        count={5}
+        page={1}
+        variant="outlined"
+        color="primary"
+        renderItem={(item) => <PaginationItem {...item} />}
+      />
+    </div>
+  );
 }
 
 export default Pagination;
